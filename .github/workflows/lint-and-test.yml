@@ -1,0 +1,21 @@
+name: Lint and Test
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+    paths:
+      - "src/**/*.ts"
+      - "package.json"
+      - "yarn.lock"
+
+jobs:
+  lint-and-test:
+    name: Lint and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3

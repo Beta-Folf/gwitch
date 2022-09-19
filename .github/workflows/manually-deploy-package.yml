@@ -1,0 +1,12 @@
+name: Manually Deploy Package
+
+on: workflow_dispatch
+
+jobs:
+  manually-deploy-package:
+    name: Manually Deploy Package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
