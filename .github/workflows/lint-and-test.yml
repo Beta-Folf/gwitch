@@ -7,9 +7,9 @@ on:
       - edited
       - synchronize
     paths:
-      - "src/**/*.ts"
-      - "package.json"
-      - "yarn.lock"
+      - 'src/**/*.ts'
+      - 'package.json'
+      - 'yarn.lock'
 
 jobs:
   lint-and-test:
