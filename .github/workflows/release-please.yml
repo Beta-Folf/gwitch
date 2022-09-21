@@ -10,6 +10,23 @@ jobs:
     name: Release Please
     runs-on: ubuntu-latest
 
+    outputs:
+      release-created: ${{ steps.release-please.outputs.release_created }}
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Release Please
+        id: release-please
+        uses: google-github-actions/release-please-action@v3
+        with:
+          package-name: gwitch
+          release-type: node
+
+  deploy-next-package:
+    name: Deploy Package
+    if: ${{ jobs.release-please.outputs.release-created }}
+    uses: ./.github/workflows/base-deploy-package.yml
+    with:
+      tag: latest
+    secrets:
+      npm-token: ${{ secrets.NPM_TOKEN }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,6 +1,19 @@
 name: Base Deploy Package
 
-on: workflow_call
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: choice
+        options:
+          - latest
+          - next
+    secrets:
+      npm-token:
+        required: true
+      github-token:
+        required: true
 
 jobs:
   base-deploy-package:
@@ -10,3 +23,38 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Start deployment
+        uses: bobheadxi/deployments@v1.3.0
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.github-token }}
+          env: ${{ inputs.tag }}
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build package
+        run: yarn build
+
+      - name: Publish package
+        run: yarn publish --tag ${{ inputs.tag }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm-token }}
+
+      - name: Update deployment status
+        uses: bobheadxi/deployments@v1.3.0
+        with:
+          step: finish
+          token: ${{ secrets.github-token }}
+          status: ${{ job.status }}
+          env: ${{ steps.deployment.outputs.env }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}

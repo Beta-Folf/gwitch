@@ -1,14 +1,11 @@
 name: Deploy Package to @next
 
 on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        required: true
-        type: choice
-        options:
-          - latest
-          - next
+  push:
+    branches:
+      - main
+    paths:
+      - src/**/*.ts
 
 jobs:
   deploy-next-package:
