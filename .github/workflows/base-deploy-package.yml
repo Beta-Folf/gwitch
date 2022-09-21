@@ -5,10 +5,7 @@ on:
     inputs:
       tag:
         required: true
-        type: choice
-        options:
-          - latest
-          - next
+        type: string
     secrets:
       npm-token:
         required: true
