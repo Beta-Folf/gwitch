@@ -1,6 +1,6 @@
 {
   "name": "gwitch",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "main": "dist/main.js",
   "repository": "git@github.com:Beta-Folf/gwitch.git",
   "author": "Beta Folf <beta@betafolf.dev>",
