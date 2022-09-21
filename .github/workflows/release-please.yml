@@ -24,6 +24,7 @@ jobs:
   deploy-next-package:
     name: Deploy Package
     if: ${{ jobs.release-please.outputs.release-created }}
+    needs: release-please
     uses: ./.github/workflows/base-deploy-package.yml
     with:
       tag: latest
