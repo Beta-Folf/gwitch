@@ -1,4 +1,4 @@
-name: Deploy Package to @next
+name: Deploy Package
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ on:
           - next
 
 jobs:
-  deploy-next-package:
+  deploy-package:
     uses: ./.github/workflows/base-deploy-package.yml
     with:
       tag: next
